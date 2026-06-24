@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background-color: #080812; }
+  body { font-family: 'DM Sans', sans-serif; background-color: #080812; color: #ffffff; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #080812; }
+  ::-webkit-scrollbar-thumb { background: #e2b96f44; border-radius: 3px; }
+  ::selection { background: #e2b96f33; color: #e2b96f; }
+}
+@layer components {
+  .gold-glow { box-shadow: 0 0 20px #e2b96f33, 0 0 40px #e2b96f1a; }
+  .gold-glow:hover { box-shadow: 0 0 30px #e2b96f55, 0 0 60px #e2b96f22; }
+  .text-gradient { background: linear-gradient(135deg, #e2b96f, #f0d49a, #e2b96f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .card-glass { background: rgba(255,255,255,0.03); border: 1px solid rgba(226,185,111,0.1); backdrop-filter: blur(10px); }
+  .card-glass:hover { border-color: rgba(226,185,111,0.3); }
+  .section-pad { padding: 6rem 1.5rem; }
+  .container-max { max-width: 1200px; margin: 0 auto; }
+}
+.noise-overlay::before { content: ''; position: fixed; inset: 0; opacity: 0.03; pointer-events: none; z-index: 9999; }
