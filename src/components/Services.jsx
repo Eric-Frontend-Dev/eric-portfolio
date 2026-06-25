@@ -29,7 +29,12 @@ export default function Services() {
   }, [])
 
   const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+    const el = document.getElementById('contact')
+    if (el) {
+      const offset = 80
+      const top = el.getBoundingClientRect().top + window.pageYOffset - offset
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
   }
 
   return (

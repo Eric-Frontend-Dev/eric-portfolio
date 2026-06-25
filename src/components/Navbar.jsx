@@ -21,9 +21,17 @@ export default function Navbar() {
   }, [])
 
   const scrollTo = (href) => {
+    // Close menu first
     setOpen(false)
-    const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    // Small delay to let menu close before scrolling
+    setTimeout(() => {
+      const el = document.querySelector(href)
+      if (el) {
+        const offset = 80 // account for sticky navbar height
+        const top = el.getBoundingClientRect().top + window.pageYOffset - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+    }, 300)
   }
 
   return (
@@ -40,6 +48,7 @@ export default function Navbar() {
           Eric.dev
         </motion.a>
 
+        {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6">
           {links.map((link) => (
             <motion.button
@@ -61,32 +70,44 @@ export default function Navbar() {
           </motion.button>
         </div>
 
-        <motion.button className="md:hidden text-white/80 hover:text-gold" onClick={() => setOpen(!open)} whileTap={{ scale: 0.9 }}>
+        {/* Mobile menu button */}
+        <motion.button
+          className="md:hidden text-white/80 hover:text-gold p-2"
+          onClick={() => setOpen(!open)}
+          whileTap={{ scale: 0.9 }}
+        >
           {open ? <X size={24} /> : <Menu size={24} />}
         </motion.button>
       </div>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-navy/95 backdrop-blur-xl border-t border-gold/10"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-navy/98 backdrop-blur-xl border-t border-gold/10"
           >
-            <div className="flex flex-col p-6 gap-4">
+            <div className="flex flex-col px-6 py-4 gap-1">
               {links.map((link, i) => (
                 <motion.button
                   key={`mob-${link.label}`}
-                  initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.07 }}
                   onClick={() => scrollTo(link.href)}
-                  className="text-left text-white/80 hover:text-gold py-2 border-b border-white/5 transition-colors"
+                  className="text-left text-white/80 hover:text-gold py-3 border-b border-white/5 last:border-0 transition-colors text-base font-medium w-full"
                 >
                   {link.label}
                 </motion.button>
               ))}
               <motion.button
-                initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.35 }}
                 onClick={() => scrollTo('#contact')}
-                className="mt-2 px-5 py-3 bg-gold/10 border border-gold/50 text-gold rounded-full text-sm"
+                className="mt-3 px-5 py-3 bg-gold text-navy font-semibold rounded-full text-sm"
               >
                 Hire Me
               </motion.button>
