@@ -78,17 +78,17 @@ export default function Services() {
                 <p className="text-white/55 text-sm leading-relaxed flex-1">{s.description}</p>
 
                 {/* Pricing — always at bottom, always aligned */}
-                <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
-                  <button
-                    onClick={scrollToContact}
-                    className="text-gold text-sm font-medium hover:text-gold-light transition-colors"
-                  >
+                <button
+                  onClick={scrollToContact}
+                  className="flex items-center justify-between mt-6 pt-4 border-t border-white/5 w-full group/btn"
+                >
+                  <span className="text-gold text-sm font-medium hover:text-gold-light transition-colors">
                     {s.pricing_label}
-                  </button>
-                  <motion.div whileHover={{ x:4 }} className="text-gold/40 group-hover:text-gold transition-colors">
+                  </span>
+                  <motion.div whileHover={{ x:4 }} className="text-gold/40 group-hover/btn:text-gold transition-colors">
                     <ArrowRight size={16} />
                   </motion.div>
-                </div>
+                </button>
               </motion.div>
             )
           })}
