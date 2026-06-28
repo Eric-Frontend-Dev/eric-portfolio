@@ -15,26 +15,36 @@ function CertLightbox({ cert, onClose }) {
   return (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/95 overflow-y-auto"
       onClick={onClose}
     >
+      {/* Close button */}
       <button onClick={onClose}
-        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white z-10">
+        className="fixed top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white z-10">
         <X size={18} />
       </button>
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.8, opacity: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-        className="max-w-3xl w-full" onClick={e => e.stopPropagation()}
-      >
-        <img src={cert.image_url} alt={cert.title}
-          className="w-full h-auto rounded-2xl shadow-2xl" />
-        <div className="text-center mt-4">
-          <p className="text-white font-semibold">{cert.title}</p>
-          <p className="text-white/50 text-sm">{cert.institution} · {cert.issued_date}</p>
-          <p className="text-white/30 text-xs mt-1">Certificate No. NHN75511</p>
-        </div>
-      </motion.div>
+
+      {/* Scrollable centered content */}
+      <div className="min-h-full flex items-center justify-center p-6 py-16">
+        <motion.div
+          initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.85, opacity: 0 }} transition={{ type: "spring", stiffness: 300, damping: 28 }}
+          className="w-full max-w-2xl" onClick={e => e.stopPropagation()}
+        >
+          {/* Full certificate image — no height limit */}
+          <img
+            src={cert.image_url}
+            alt={cert.title}
+            className="w-full h-auto rounded-2xl shadow-2xl block"
+          />
+          {/* Details below */}
+          <div className="text-center mt-5 pb-4">
+            <p className="text-white font-semibold text-lg">{cert.title}</p>
+            <p className="text-white/50 text-sm mt-1">{cert.institution} · {cert.issued_date}</p>
+            <p className="text-white/30 text-xs mt-1">Certificate No. NHN75511</p>
+          </div>
+        </motion.div>
+      </div>
     </motion.div>
   )
 }
@@ -59,28 +69,28 @@ function CertCard({ cert, i }) {
 
         {/* Certificate image — full display, no cropping */}
         <div
-          className="relative overflow-hidden bg-gradient-to-br from-blue-900/30 to-navy cursor-pointer"
+          className="relative cursor-pointer"
           onClick={() => cert.image_url && setLightbox(true)}
         >
           {cert.image_url ? (
             <>
-              {/* Full image — object-contain so nothing is cut off */}
+              {/* Full certificate image — no cropping, full height shown */}
               <img
                 src={cert.image_url}
                 alt={cert.title}
-                className="w-full h-auto object-contain group-hover:scale-102 transition-transform duration-500"
+                className="w-full h-auto block"
                 style={{ display: 'block' }}
               />
               {/* Click to expand overlay */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                <div className="flex items-center gap-2 px-4 py-2 bg-black/60 backdrop-blur rounded-full text-white text-sm">
-                  <ZoomIn size={16} /> Click to view fullscreen
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                <div className="flex items-center gap-2 px-4 py-2 bg-black/70 backdrop-blur rounded-full text-white text-sm font-medium">
+                  <ZoomIn size={16} /> View Fullscreen
                 </div>
               </div>
             </>
           ) : (
             <div className="h-48 flex flex-col items-center justify-center gap-3"
-              style={{ background: 'linear-gradient(135deg, rgba(226,185,111,0.08) 0%, rgba(139,92,246,0.05) 100%)' }}>
+              style={{ background: "linear-gradient(135deg, rgba(226,185,111,0.08) 0%, rgba(139,92,246,0.05) 100%)" }}>
               <div className="w-16 h-16 rounded-2xl bg-gold/10 border-2 border-gold/20 flex items-center justify-center">
                 <Award size={28} className="text-gold" />
               </div>
